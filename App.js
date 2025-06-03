@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import SplashScreen from "./SplashScreen";
+import SignInScreen from "./Screens/SignInScreen";
+import { useEffect, useState } from "react";
+import HomeScreen from "./Screens/HomeScreen";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Retailo Main Screen!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [isShowSplash, setIsShowSplash] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    setTimeout(() => {
+      setIsShowSplash(false);
+    }, 3000);
+  }, []);
+  if (isShowSplash) {
+    return <SplashScreen />;
+  }
+
+  if (!isLoggedIn) {
+    return <SignInScreen onLoginSucess={() => setIsLoggedIn(true)} />;
+  }
+  return <HomeScreen />;
+}
