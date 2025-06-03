@@ -1,17 +1,22 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CategoryList from "./CategoryList";
 import MenuList from "./MenuList";
-
 import ThemedText from "../../components/ThemedText";
 import { useState } from "react";
 import Invoice from "./Invoice";
 import { CategoryProvider } from "../../hooks/BillingContext";
+import Cart from "../../components/Cart";
 
 const BillingScreen = () => {
   const [activeTab, setActiveTab] = useState("Category");
 
   return (
-    <View style={styles.billingContainer}>
+    <View
+      style={[
+        styles.billingContainer,
+        activeTab === "Cart" && { backgroundColor: "#fff" },
+      ]}
+    >
       <CategoryProvider>
         {/* navigation header  */}
         <View style={styles.navigationHeader}>
@@ -26,7 +31,11 @@ const BillingScreen = () => {
                 activeTab === item && styles.activeTab,
               ]}
             >
-              <ThemedText style={styles.navigationText}>{item}</ThemedText>
+              {item === "Cart" ? (
+                <Cart />
+              ) : (
+                <ThemedText style={styles.navigationText}>{item}</ThemedText>
+              )}
             </Pressable>
           ))}
         </View>
@@ -40,7 +49,6 @@ const BillingScreen = () => {
     </View>
   );
 };
-
 export default BillingScreen;
 
 const styles = StyleSheet.create({
@@ -64,6 +72,22 @@ const styles = StyleSheet.create({
     width: "33.33%",
     textAlign: "center",
     backgroundColor: "#233250",
+  },
+  button: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
   },
   navigationText: {
     fontSize: 14,

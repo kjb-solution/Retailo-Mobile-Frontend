@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import BillingScreen from "./screens/BillingScreen/BillingScreen";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useCallback } from "react";
+
 
 // Prevent native splash screen from autohiding before app is ready
 SplashScreen.preventAutoHideAsync();
@@ -17,24 +18,24 @@ export default function App() {
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
-      // This tells the native splash screen to hide once the layout has happened
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null; // Or a custom loading indicator if you prefer
-  }
+  if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaView
-      style={styles.container}
-      edges={["top", "bottom"]}
-      onLayout={onLayoutRootView}
-    >
-      <StatusBar style="auto" />
-      <BillingScreen />
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView
+        style={styles.container}
+        edges={["top", "bottom"]}
+        onLayout={onLayoutRootView}
+      >
+        <StatusBar style="auto" />
+        <BillingScreen />
+       
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

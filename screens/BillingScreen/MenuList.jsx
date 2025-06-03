@@ -121,5 +121,6 @@ const styles = StyleSheet.create({
 
   flatListContainer: {
     justifyContent: "space-between",
+    paddingBottom: 150,
   },
 });

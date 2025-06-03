@@ -11,6 +11,7 @@ export const CategoryProvider = ({ children }) => {
   );
   const [categoryName, setCategoryName] = useState(menuData[0].category);
   const [cartList, setCartList] = useState([]);
+  const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
 
   // for debugging only below useEffect
   // useEffect(() => {
@@ -18,6 +19,11 @@ export const CategoryProvider = ({ children }) => {
   //   console.log("filteredProducts", filteredProducts);
   // }, [selectedCategory]);
 
+  useEffect(() => {
+    setCartTotalQuantity(
+      cartList.reduce((total, item) => total + item.quantity, 0)
+    );
+  }, [cartList]);
   // Function to handle category click
   const handleCategoryClick = (categoryId) => {
     // console.log("Category clicked:", categoryId);
@@ -43,6 +49,7 @@ export const CategoryProvider = ({ children }) => {
         handleCategoryClick,
         cartList,
         setCartList,
+        cartTotalQuantity,
       }}
     >
       {children}
