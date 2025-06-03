@@ -4,7 +4,7 @@ import Icon from "./assets/splash-logo.png";
 const SplashScreen = () => {
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.logoWrapper}>
         <Image source={Icon} style={styles.image} />
       </View>
     </View>
@@ -24,5 +24,16 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     resizeMode: "cover",
+  },
+  logoWrapper: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    // iOS shadow
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    // Android shadow
+    elevation: 10,
   },
 });
