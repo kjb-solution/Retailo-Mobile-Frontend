@@ -3,6 +3,7 @@
     "name": "Retailo-Mobile-Frontend",
     "slug": "Retailo-Mobile-Frontend",
     "version": "1.0.0",
+    "scheme": "retailomobile",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -24,6 +25,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-router"]
   }
 }
