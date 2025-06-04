@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { useState } from "react";
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import ThemedText from "../../components/ThemedText";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Drawer from "../../components/Drawer";
 import PaymentSplitComponent from "../../components/PaymentSplitComponent";
+import GuestDetails from "../../components/GuestDetails";
 
 const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // State for drawer
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isPaymentSplitComponentOpen, setIsPaymentSplitComponentOpen] = useState(false);
+  const [isGuestDetailsOpen, setIsGuestDetailsOpen] = useState(false);
+  
 
   const handleSave = () => {
     setIsLoading(true);
@@ -23,10 +21,28 @@ const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
       setIsLoading(false);
     }, 3000);
   };
-  
+  const handleDrawerLogic =(screenName="closeDrawer") => {
+    if(screenName === "PaymentSplitComponent"){
+      setIsGuestDetailsOpen(false)
+      setIsPaymentSplitComponentOpen(true)
+      setIsDrawerOpen(true)
+    }
+    else if(screenName === "GuestDetails"){
+      setIsPaymentSplitComponentOpen(false)
+      setIsGuestDetailsOpen(true)
+      setIsDrawerOpen(true)
+    }
+    else{
+      setIsDrawerOpen(false)
+      setIsGuestDetailsOpen(false)
+      setIsPaymentSplitComponentOpen(false)
+      
+    }
+   
+  }
 
   return (
-    <View>
+    <View style={{ paddingBottom: 20 }}>
       <View style={styles.row}>
         <ThemedText style={styles.text}>CGST/SGST</ThemedText>
         <ThemedText style={styles.text}>₹11.20/11.20</ThemedText>
@@ -51,9 +67,10 @@ const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
           <Pressable
             key={method}
             onPress={() => {
-              setSelectedPayment(method)
+              setSelectedPayment(method);
               if (method === "Others") {
-                setIsDrawerOpen(true)
+                setIsDrawerOpen(true);
+                handleDrawerLogic("PaymentSplitComponent");
               }
             }}
             style={[
@@ -99,7 +116,11 @@ const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
       </View>
       {/* Drawer with PaymentSplitComponent as child */}
       <Drawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}>
-        <PaymentSplitComponent setIsDrawerOpen={setIsDrawerOpen} />
+        {isGuestDetailsOpen && <GuestDetails handleDrawerLogic={handleDrawerLogic} />}
+
+        {isPaymentSplitComponentOpen && (
+          <PaymentSplitComponent handleDrawerLogic={handleDrawerLogic} />
+        )}
       </Drawer>
 
       <View style={styles.saveContainer}>
@@ -114,7 +135,12 @@ const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
           </ThemedText>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.MoreButton]}>
+        <TouchableOpacity
+          style={[styles.MoreButton]}
+          onPress={() => {
+           handleDrawerLogic("GuestDetails");
+          }}
+        >
           <ThemedText style={styles.moreText}>More</ThemedText>
         </TouchableOpacity>
       </View>

@@ -12,9 +12,9 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import ThemedDropDown from "./ThemedDropDown";
 
-const PaymentSplitComponent = ({ setIsDrawerOpen }) => {
+const PaymentSplitComponent = ({ handleDrawerLogic }) => {
   const [cash, setCash] = useState("");
   const [card, setCard] = useState("");
   const [bank, setBank] = useState("Select");
@@ -76,15 +76,16 @@ const PaymentSplitComponent = ({ setIsDrawerOpen }) => {
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Bank</Text>
               <View style={styles.inlineRow}>
-                <Picker
+                <ThemedDropDown
                   selectedValue={bank}
-                  onValueChange={(itemValue) => setBank(itemValue)}
-                  style={styles.picker}
-                >
-                  <Picker.Item label="Select" value="Select" />
-                  <Picker.Item label="Bank 1" value="Bank 1" />
-                  <Picker.Item label="Bank 2" value="Bank 2" />
-                </Picker>
+                  onValueChange={setBank}
+                  items={[
+                    { label: "Select", value: "Select", enabled: false },
+                    { label: "Bank 1", value: "Bank 1" },
+                    { label: "Bank 2", value: "Bank 2" },
+                  ]}
+                  style={styles.pickerContainer}
+                />
                 <TextInput
                   style={styles.inlineInput}
                   placeholder="₹ Amount"
@@ -119,15 +120,16 @@ const PaymentSplitComponent = ({ setIsDrawerOpen }) => {
             <View style={styles.inputGroup}>
               <Text style={styles.label}>Room</Text>
               <View style={styles.inlineRow}>
-                <Picker
+                <ThemedDropDown
                   selectedValue={room}
-                  onValueChange={(itemValue) => setRoom(itemValue)}
-                  style={styles.picker}
-                >
-                  <Picker.Item label="Select" value="Select" />
-                  <Picker.Item label="ROM 1" value="ROM 1" />
-                  <Picker.Item label="ROM 2" value="ROM 2" />
-                </Picker>
+                  onValueChange={setRoom}
+                  items={[
+                    { label: "Select", value: "Select", enabled: false },
+                    { label: "ROM 1", value: "ROM 1" },
+                    { label: "RO0M 2", value: "ROM 2" },
+                  ]}
+                  style={styles.pickerContainer}
+                />
                 <TextInput
                   style={styles.inlineInput}
                   placeholder="₹ Amount"
@@ -140,10 +142,20 @@ const PaymentSplitComponent = ({ setIsDrawerOpen }) => {
 
             {/* Buttons */}
             <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.cancelButton} onPress={() => {setIsDrawerOpen(false)}}>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={() => {
+                  handleDrawerLogic();
+                }}
+              >
                 <Text style={styles.cancelText}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.submitButton}  onPress={() => {setIsDrawerOpen(false)}}>
+              <TouchableOpacity
+                style={styles.submitButton}
+                onPress={() => {
+                  handleDrawerLogic();
+                }}
+              >
                 <Text style={styles.submitText}>Submit</Text>
               </TouchableOpacity>
             </View>
@@ -198,12 +210,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
   },
-  picker: {
-    flex: 1.1,
+  pickerContainer: {
+    flex: 1.2,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 6,
     backgroundColor: "#f9f9f9",
-    height: 50,
+    overflow: "hidden",
     justifyContent: "center",
-    fontSize: 10,
+    height: 40,
   },
   inlineInput: {
     flex: 1,
@@ -214,6 +229,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 16,
     backgroundColor: "#f9f9f9",
+    height: 53,
   },
   buttonRow: {
     flexDirection: "row",

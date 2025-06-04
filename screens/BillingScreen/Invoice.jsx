@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   rate: {
-    flex: 0.2,
+    flex: 0.15,
     textAlign: "center",
     paddingHorizontal: 5,
     justifyContent: "center",
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   total: {
-    flex: 0.2,
+    flex: 0.22,
     textAlign: "center",
     justifyContent: "center",
   },
