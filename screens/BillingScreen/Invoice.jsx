@@ -2,7 +2,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  Text,
   FlatList,
 } from "react-native";
 import { useCategory } from "../../hooks/BillingContext";

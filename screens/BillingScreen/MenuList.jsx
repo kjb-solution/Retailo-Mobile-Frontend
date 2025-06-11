@@ -5,6 +5,7 @@ import { useCategory } from "../../hooks/BillingContext";
 import ThemedText from "../../components/ThemedText";
 import { Feather } from "@expo/vector-icons";
 import ProductModel from "../../components/ProductModel";
+import Toast from "react-native-toast-message";
 
 const MenuList = () => {
   const { filteredProducts, categoryName, setCartList, cartList } =
@@ -36,9 +37,27 @@ const MenuList = () => {
           : item
       );
       setCartList(updatedCartList);
+      Toast.hide();
+      setTimeout(() => {
+        Toast.show({
+          type: "success",
+          text1: `${product.name} added`,
+          position: "bottom",
+          visibilityTime: 2000,
+        });
+      }, 100);
     } else {
       const newProduct = { ...product, quantity };
       setCartList([...cartList, newProduct]);
+      Toast.hide();
+      setTimeout(() => {
+        Toast.show({
+          type: "success",
+          text1: `${newProduct.name} added`,
+          position: "bottom",
+          visibilityTime: 2000,
+        });
+      }, 100);
     }
   };
   // for debugging only below useEffect

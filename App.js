@@ -5,7 +5,8 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useCallback } from "react";
-
+import Toast from "react-native-toast-message";
+import { toastConfig } from "./components/toastConfig";
 
 // Prevent native splash screen from autohiding before app is ready
 SplashScreen.preventAutoHideAsync();
@@ -33,7 +34,8 @@ export default function App() {
       >
         <StatusBar style="auto" />
         <BillingScreen />
-       
+
+        <Toast config={toastConfig} />
       </SafeAreaView>
     </SafeAreaProvider>
   );
