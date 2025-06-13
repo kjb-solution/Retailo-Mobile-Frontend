@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
     backgroundColor: "#f5f5f5",
+    position: "absolute",
+    bottom: 0,
+    zIndex: 9999,
   },
   text: {
     fontWeight: "bold",

@@ -19,8 +19,6 @@ const GuestDetails = ({ handleDrawerLogic }) => {
 
   return (
     <View style={styles.container}>
-      <ThemedText style={styles.sectionTitle}>Guest Details</ThemedText>
-
       <View style={styles.headerContainer}>
         {["NC", "Discount", "Split"].map((item) => (
           <TouchableOpacity
@@ -37,6 +35,13 @@ const GuestDetails = ({ handleDrawerLogic }) => {
       </View>
 
       <View style={styles.contentPlaceholder}>
+        {selectedTab === null && (
+          <View style={styles.placeholderContainer}>
+            <ThemedText style={styles.placeholderText}>
+              Select a tab to view details
+            </ThemedText>
+          </View>
+        )}
         {selectedTab === "NC" && (
           <View>
             <View style={styles.inputRow}>
@@ -153,11 +158,20 @@ const styles = StyleSheet.create({
     // backgroundColor: "#f8f8f8",
     padding: 10,
   },
-  sectionTitle: {
-    fontSize: 25,
-    fontWeight: "bold",
-    marginBottom: 15,
-    color: "#333",
+  // sectionTitle: {
+  //   fontSize: 25,
+  //   fontWeight: "bold",
+  //   marginBottom: 15,
+  //   color: "#333",
+  // },
+  placeholderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placeholderText: {
+    fontSize: 18,
+    color: "#999",
   },
   headerContainer: {
     flexDirection: "row",

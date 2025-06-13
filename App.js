@@ -7,8 +7,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useCallback } from "react";
 import Toast from "react-native-toast-message";
 import { toastConfig } from "./components/toastConfig";
+import ViewSales from "./screens/RestaurantScreens/ViewSales/ViewSales";
+import Master from "./screens/MasterScreens/Master";
 
-// Prevent native splash screen from autohiding before app is ready
+// Prevent native splash screen from auto hiding before app is ready
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -26,18 +28,22 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView
-        style={styles.container}
-        edges={["top", "bottom"]}
-        onLayout={onLayoutRootView}
-      >
-        <StatusBar style="auto" />
-        <BillingScreen />
+    <>
+      <SafeAreaProvider>
+        <SafeAreaView
+          style={styles.container}
+          edges={["top", "bottom"]}
+          onLayout={onLayoutRootView}
+        >
+          <StatusBar style="auto" />
+          {/* <BillingScreen /> */}
 
-        <Toast config={toastConfig} />
-      </SafeAreaView>
-    </SafeAreaProvider>
+          {/* <ViewSales /> */}
+          <Master />
+        </SafeAreaView>
+      </SafeAreaProvider>
+      <Toast config={toastConfig} />
+    </>
   );
 }
 

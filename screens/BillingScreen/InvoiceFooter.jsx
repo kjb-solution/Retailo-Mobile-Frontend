@@ -11,9 +11,9 @@ import GuestDetails from "../../components/GuestDetails";
 const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isPaymentSplitComponentOpen, setIsPaymentSplitComponentOpen] = useState(false);
+  const [isPaymentSplitComponentOpen, setIsPaymentSplitComponentOpen] =
+    useState(false);
   const [isGuestDetailsOpen, setIsGuestDetailsOpen] = useState(false);
-  
 
   const handleSave = () => {
     setIsLoading(true);
@@ -21,25 +21,21 @@ const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
       setIsLoading(false);
     }, 3000);
   };
-  const handleDrawerLogic =(screenName="closeDrawer") => {
-    if(screenName === "PaymentSplitComponent"){
-      setIsGuestDetailsOpen(false)
-      setIsPaymentSplitComponentOpen(true)
-      setIsDrawerOpen(true)
+  const handleDrawerLogic = (screenName = "closeDrawer") => {
+    if (screenName === "PaymentSplitComponent") {
+      setIsGuestDetailsOpen(false);
+      setIsPaymentSplitComponentOpen(true);
+      setIsDrawerOpen(true);
+    } else if (screenName === "GuestDetails") {
+      setIsPaymentSplitComponentOpen(false);
+      setIsGuestDetailsOpen(true);
+      setIsDrawerOpen(true);
+    } else {
+      setIsDrawerOpen(false);
+      setIsGuestDetailsOpen(false);
+      setIsPaymentSplitComponentOpen(false);
     }
-    else if(screenName === "GuestDetails"){
-      setIsPaymentSplitComponentOpen(false)
-      setIsGuestDetailsOpen(true)
-      setIsDrawerOpen(true)
-    }
-    else{
-      setIsDrawerOpen(false)
-      setIsGuestDetailsOpen(false)
-      setIsPaymentSplitComponentOpen(false)
-      
-    }
-   
-  }
+  };
 
   return (
     <View style={{ paddingBottom: 20 }}>
@@ -114,10 +110,17 @@ const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
           </Pressable>
         ))}
       </View>
-      {/* Drawer with PaymentSplitComponent as child */}
-      <Drawer isOpen={isDrawerOpen} setIsOpen={setIsDrawerOpen}>
-        {isGuestDetailsOpen && <GuestDetails handleDrawerLogic={handleDrawerLogic} />}
+      <Drawer
+        isOpen={isDrawerOpen}
+        setIsOpen={setIsDrawerOpen}
+        title={isGuestDetailsOpen ? "Guest Details" : ""}
+      >
+        {/* Drawer with GuestDetailsComponent as child */}
+        {isGuestDetailsOpen && (
+          <GuestDetails handleDrawerLogic={handleDrawerLogic} />
+        )}
 
+        {/* Drawer with PaymentSplitComponent as child */}
         {isPaymentSplitComponentOpen && (
           <PaymentSplitComponent handleDrawerLogic={handleDrawerLogic} />
         )}
@@ -138,7 +141,7 @@ const InvoiceFooter = ({ grandTotal, selectedPayment, setSelectedPayment }) => {
         <TouchableOpacity
           style={[styles.MoreButton]}
           onPress={() => {
-           handleDrawerLogic("GuestDetails");
+            handleDrawerLogic("GuestDetails");
           }}
         >
           <ThemedText style={styles.moreText}>More</ThemedText>
